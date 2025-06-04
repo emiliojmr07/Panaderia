@@ -521,10 +521,39 @@
             contenedor.innerHTML = "";
 
             productos[categoria].forEach((productos) => {
-                const btn = document.createElement("button");
-                btn.textContent = productos.nombre;
-                btn.onclick = () => mostrarDetalle(productos, categoria);
-                contenedor.appendChild(btn);
+                const tarjeta = document.createElement("div");
+                tarjeta.style.display = "flex";
+                tarjeta.style.flexDirection = "column";
+                tarjeta.style.alignContent = "center";
+                tarjeta.style.cursor = "pointer";
+                tarjeta.style.backgroundColor = "#fffcc80";
+                tarjeta.style.borderRadius = "8px";
+                tarjeta.style.padding = "10px";
+                tarjeta.style.transition = "background-color 0.2s"
+                tarjeta.style.width = "130px";
+                tarjeta.style.boxSizing = "border-box";
+
+                tarjeta.onmouseenter = () => {
+                    tarjeta.style.backgroundColor = "#ffe0b2";
+                };
+                tarjeta.onmouseleave = () => {
+                    tarjeta.style.backgroundColor = "#ffcc80";
+                };
+
+                tarjeta.onclick = () => mostrarDetalle(productos, categoria);
+                
+                const img = document.createElement("img");
+                img.src = productos.imagen;
+                img.alt = productos.nombre;
+                img.style.width = "100px";
+                img.style.height = "100px";
+                img.style.objectFit = "corver";
+                img.style.borderRadius = "6px";
+                img.style.marginBottom = "8px";
+                
+                const nombre = document.createElement("span");
+                nombre.textContent = productos.nombre;
+                nombre.style.fontWeight = "bold"
             });
         }
 
