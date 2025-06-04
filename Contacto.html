@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Contacto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8e1;
+            color: #5d4037;
+            margin: 0;
+            padding: 20px;
+            overflow: auto;
+        }
+
+        .contenedor-contacto {
+            max-width: 100%;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .fila-imagenes {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .imagen-contacto {
+            width: 240px;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .imagen-grande{
+            width: 360px;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        .correo {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+
+        .correo a {
+            color: #5d4037;
+            text-decoration: none;
+        }
+
+        .correo a:hover {
+            text-decoration: underline;
+        }
+
+        .lado-izquierdo,
+        .lado-derecho {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin: 0;
+        }
+
+        .cuerpo-contacto {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .imagenes-centro {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            gap: 20px;
+        }
+
+        .fila-central{
+            position: relative;
+            top: 45px;
+            margin-bottom: 20px;
+        }
+
+        .contenedor-imagen-grande{
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contenedor-contacto">
+        <!-- Fila superior -->
+        <div class="fila-imagenes">
+            <img src="img/TartaHojaldre.jpg" alt="Imagen 1" class="imagen-contacto">
+            <img src="img/TartaMinnie.jpg" alt="Imagen 2" class="imagen-contacto">
+            <img src="img/TartaFrozen.jpg" alt="Imagen 3" class="imagen-contacto">
+        </div>
+
+        <div class="cuerpo-contacto">
+            <div class="lado-izquierdo">
+                <img src="img/Pasteles.jpg" alt="Imagen Lateral Izq 1" class="imagen-contacto">
+                <img src="img/CrucesdePan.jpg" alt="Imagen Lateral Izq 2" class="imagen-contacto">
+            </div>
+
+            <div class="imagenes-centro">
+                <div class="fila-central">
+                    <p><strong>Si quieres encargar una tarta y estás pensando en personalizarla con una foto no dudes en enviarla a nuestro correo: </strong></p>
+
+                    <p class="correo">
+                        <a href="mailto:panaderialuismaciasehijos@gmail.com">panaderialuismaciasehijos@gmail.com</a>
+                    </p>
+
+                    <p><strong>Para realizar cualquier encargo o necesitas más información llama al 924731086 y te responderemos lo antes posible.</strong></p>
+                </div>
+
+                <!-- Fila inferior -->
+                <div class="contenedor-imagen-grande">
+                    <img src="img/Tronco.jpg" alt="Imagen 4" class="imagen-grande">
+                </div>
+            </div>
+
+            <div class="lado-derecho">
+                <img src="img/TartaCumple2.jpg" alt="Imagen Lateral Izq 3" class="imagen-contacto">
+                <img src="img/TartaVariosPisos.jpg" alt="Imagen Lateral Izq 4" class="imagen-contacto">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
