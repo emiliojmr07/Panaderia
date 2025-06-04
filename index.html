@@ -9,27 +9,37 @@
             margin: 0;
             padding: 0;
             height: 100%;
+            font-family: sans-serif;
         }
-        .row {
+        header {
             display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-        .top {
             height: 25%;
-            display: flex;
         }
-        .bottom {
-            flex: 1;
-            display: flex;
-        }
-        .sidebar {
+        header .logo {
             width: 12%;
-            height: 100%;
         }
-        .main {
+        header .titulo {
             flex: 1;
-            height: 100%;
+        }
+        .container {
+            display: flex;
+            height: 75%;
+        }
+        nav {
+            width: 12%;
+            background-color: #f4f4f4;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        nav a {
+            display: block;
+            margin: 10px 0;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        main {
+            flex: 1;
         }
         iframe {
             width: 100%;
@@ -39,23 +49,23 @@
     </style>
 </head>
 <body>
-    <div class="row">
-        <div class="top">
-            <div class="sidebar">
-                <iframe src="logo.html" name="logo"></iframe>
-            </div>
-            <div class="main">
-                <iframe src="titulo.html" name="titulo"></iframe>
-            </div>
+    <header>
+        <div class="logo">
+            <iframe src="logo.html" name="logo"></iframe>
         </div>
-        <div class="bottom">
-            <div class="sidebar">
-                <iframe src="menu.html" name="menu"></iframe>
-            </div>
-            <div class="main">
-                <iframe src="principal.html" name="principal"></iframe>
-            </div>
+        <div class="titulo">
+            <iframe src="titulo.html" name="titulo"></iframe>
         </div>
+    </header>
+    <div class="container">
+        <nav>
+            <a href="principal.html" target="contenido">Inicio</a>
+            <a href="otros.html" target="contenido">Otros</a>
+            <a href="contacto.html" target="contenido">Contacto</a>
+        </nav>
+        <main>
+            <iframe src="principal.html" name="contenido"></iframe>
+        </main>
     </div>
 </body>
 </html>
