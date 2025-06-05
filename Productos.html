@@ -520,16 +520,16 @@
             const contenedor = document.getElementById("lista-productos");
             contenedor.innerHTML = "";
 
-            productos[categoria].forEach((productos) => {
+            productos[categoria].forEach((producto) => {
                 const tarjeta = document.createElement("div");
                 tarjeta.style.display = "flex";
                 tarjeta.style.flexDirection = "column";
-                tarjeta.style.alignContent = "center";
+                tarjeta.style.alignItems = "center";
                 tarjeta.style.cursor = "pointer";
-                tarjeta.style.backgroundColor = "#fffcc80";
+                tarjeta.style.backgroundColor = "#ffcc80";
                 tarjeta.style.borderRadius = "8px";
                 tarjeta.style.padding = "10px";
-                tarjeta.style.transition = "background-color 0.2s"
+                tarjeta.style.transition = "background-color 0.2s";
                 tarjeta.style.width = "130px";
                 tarjeta.style.boxSizing = "border-box";
 
@@ -540,22 +540,30 @@
                     tarjeta.style.backgroundColor = "#ffcc80";
                 };
 
-                tarjeta.onclick = () => mostrarDetalle(productos, categoria);
-                
+                tarjeta.onclick = () => mostrarDetalle(producto, categoria);
+
                 const img = document.createElement("img");
-                img.src = productos.imagen;
-                img.alt = productos.nombre;
+                img.src = producto.imagen;
+                img.alt = producto.nombre;
                 img.style.width = "100px";
                 img.style.height = "100px";
-                img.style.objectFit = "corver";
+                img.style.objectFit = "cover";
                 img.style.borderRadius = "6px";
                 img.style.marginBottom = "8px";
-                
+
                 const nombre = document.createElement("span");
-                nombre.textContent = productos.nombre;
-                nombre.style.fontWeight = "bold"
+                nombre.textContent = producto.nombre;
+                nombre.style.fontWeight = "bold";
+                nombre.style.color = "#5d4037";
+                nombre.style.fontSize = "14px";
+                nombre.style.textAlign = "center";
+
+                tarjeta.appendChild(img);
+                tarjeta.appendChild(nombre);
+                contenedor.appendChild(tarjeta);
             });
         }
+
 
         function mostrarDetalle(producto, categoria) {
             const detalle = document.getElementById("detalle-producto");
