@@ -2,20 +2,74 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width = device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panadería y Pastelería Luís Macías e Hijos</title>
+    <style>
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .fila-superior {
+            display: flex;
+            height: 25%;
+        }
+
+        .logo {
+            width: 12%;
+            height: 100%;
+            border: none;
+        }
+
+        .titulo {
+            width: 88%;
+            height: 100%;
+            border: none;
+        }
+
+        .fila-inferior {
+            display: flex;
+            height: 75%;
+        }
+
+        .menu {
+            width: 12%;
+            height: 100%;
+            border: none;
+        }
+
+        .principal {
+            width: 88%;
+            height: 100%;
+            border: none;
+        }
+
+       
+        @media screen and (max-width: 768px) {
+            .fila-superior,
+            .fila-inferior {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .logo, .titulo, .menu, .principal {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
 </head>
-
-<frameset rows="25%, *">
-    <frameset cols="12%, *">
-        <frame src="logo.html" name="logo" noresize>
-        <frame src="titulo.html" name="titulo" noresize>      
-    </frameset>
-    <frameset cols="12%, *">
-        <frame src="menu.html" name="menu" noresize>
-        <frame src="Principal.html" name="principal" noresize>   
-    </frameset>
-</frameset>
-
-</html>
+<body>
+    <div class="fila-superior">
+        <iframe src="logo.html" class="logo" name="logo" loading="lazy"></iframe>
+        <iframe src="titulo.html" class="titulo" name="titulo" loading="lazy"></iframe>
+    </div>
+    <div class="fila-inferior">
+        <iframe src="menu.html" class="menu" name="menu" loading="lazy"></iframe>
+        <iframe src="Principal.html" class="principal" name="principal" loading="lazy"></iframe>
+    </div>
+</body>
 </html>
