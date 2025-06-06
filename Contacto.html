@@ -5,27 +5,28 @@
     <meta charset="UTF-8">
     <title>Contacto</title>
     <style>
+        html,
         body {
+            margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
             background-color: #fff8e1;
             color: #5d4037;
-            margin: 0;
-            padding: 20px;
-            overflow: auto;
         }
 
         .contenedor-contacto {
-            max-width: 100%;
-            padding: 0 20px;
+            width: 100%;
+            padding: 20px;
             text-align: center;
+            box-sizing: border-box;
         }
 
         .fila-imagenes {
             display: flex;
             justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 30px;
+            gap: 20px;
             margin-bottom: 30px;
+            
         }
 
         .imagen-contacto {
@@ -35,7 +36,7 @@
             border-radius: 10px;
         }
 
-        .imagen-grande{
+        .imagen-grande {
             width: 360px;
             height: 240px;
             object-fit: cover;
@@ -58,19 +59,16 @@
             text-decoration: underline;
         }
 
+        .cuerpo-contacto {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .lado-izquierdo,
         .lado-derecho {
             display: flex;
             flex-direction: column;
-            gap: 30px;
-            margin: 0;
-        }
-
-        .cuerpo-contacto {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            align-items: center;
             gap: 20px;
         }
 
@@ -82,23 +80,20 @@
             gap: 20px;
         }
 
-        .fila-central{
-            position: relative;
-            top: 45px;
-            margin-bottom: 20px;
+        .fila-central {
+            margin-top: 20px;
+            max-width: 600px;
         }
 
-        .contenedor-imagen-grande{
+        .contenedor-imagen-grande {
             display: flex;
             justify-content: center;
-            margin-top: 40px;
         }
     </style>
 </head>
 
 <body>
     <div class="contenedor-contacto">
-        <!-- Fila superior -->
         <div class="fila-imagenes">
             <img src="img/TartaHojaldre.jpg" alt="Imagen 1" class="imagen-contacto">
             <img src="img/TartaMinnie.jpg" alt="Imagen 2" class="imagen-contacto">
@@ -107,30 +102,28 @@
 
         <div class="cuerpo-contacto">
             <div class="lado-izquierdo">
-                <img src="img/Pasteles.jpg" alt="Imagen Lateral Izq 1" class="imagen-contacto">
-                <img src="img/CrucesdePan.jpg" alt="Imagen Lateral Izq 2" class="imagen-contacto">
+                <img src="img/Pasteles.jpg" alt="Imagen Izq 1" class="imagen-contacto">
+                <img src="img/CrucesdePan.jpg" alt="Imagen Izq 2" class="imagen-contacto">
             </div>
 
             <div class="imagenes-centro">
                 <div class="fila-central">
-                    <p><strong>Si quieres encargar una tarta y estás pensando en personalizarla con una foto no dudes en enviarla a nuestro correo: </strong></p>
-
+                    <p><strong>Si quieres encargar una tarta y estás pensando en personalizarla con una foto no dudes en
+                            enviarla a nuestro correo:</strong></p>
                     <p class="correo">
                         <a href="mailto:panaderialuismaciasehijos@gmail.com">panaderialuismaciasehijos@gmail.com</a>
                     </p>
-
-                    <p><strong>Para realizar cualquier encargo o necesitas más información llama al 924731086 y te responderemos lo antes posible.</strong></p>
+                    <p><strong>Para realizar cualquier encargo o necesitas más información llama al 924731086 y te
+                            responderemos lo antes posible.</strong></p>
                 </div>
-
-                <!-- Fila inferior -->
                 <div class="contenedor-imagen-grande">
-                    <img src="img/Tronco.jpg" alt="Imagen 4" class="imagen-grande">
+                    <img src="img/Tronco.jpg" alt="Imagen Grande" class="imagen-grande">
                 </div>
             </div>
 
             <div class="lado-derecho">
-                <img src="img/TartaCumple2.jpg" alt="Imagen Lateral Izq 3" class="imagen-contacto">
-                <img src="img/TartaVariosPisos.jpg" alt="Imagen Lateral Izq 4" class="imagen-contacto">
+                <img src="img/TartaCumple2.jpg" alt="Imagen Der 1" class="imagen-contacto">
+                <img src="img/TartaVariosPisos.jpg" alt="Imagen Der 2" class="imagen-contacto">
             </div>
         </div>
     </div>

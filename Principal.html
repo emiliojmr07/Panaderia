@@ -7,22 +7,30 @@
     <style>
         html,
         body {
-            height: 100%;
             margin: 0;
             padding: 0;
-            overflow: hidden;
-            background-image: url("img/fondoPrincipal.jpg");
-            background-size: cover;
-            background-position: center;
+            height: 100%;
             font-family: Arial, sans-serif;
         }
 
+        body {
+            background-image: url("img/fondoPrincipal.jpg");
+            background-size: cover;
+            background-position: center;
+            overflow-y: auto;
+            /* ✅ Añadido: permite hacer scroll vertical en móvil si es necesario */
+        }
+
         .contenido {
-            height: 100%;
+            min-height: 100vh;
+            /* ✅ Para asegurar que el contenido ocupa toda la altura visible */
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
+            /* ✅ Añadido para evitar que la caja quede pegada a los bordes */
+            box-sizing: border-box;
         }
 
         .caja {
@@ -44,6 +52,14 @@
             line-height: 1.6;
             margin-bottom: 1rem;
         }
+
+        /* ✅ RESPONSIVE */
+        @media screen and (max-width: 768px) {
+            .caja {
+                max-width: 100%;
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 
@@ -51,24 +67,17 @@
     <div class="contenido">
         <div class="caja">
             <h2>¡Bienvenidos!</h2>
-            <p>
-                Esta es una panadería familiar de hace más de 50 años.
-                <br><br>
-                Esta panadería la llevan a cabo los 4 hermanos: Emilio, Antonio, Francisco José y Luís.
-                <br><br>
-                En esta panadería elaboramos todo tipo de productos de bollería, pastelería y otros tipos de productos
-                artesanales.
-                <br><br>
-                Nuestros productos están elaborados por productos de gran calidad.
-                <br><br>
-                Hacemos reparto de bollería a domicilio y también de tartas a los establecimientos donde tendrá lugar la
-                celebración.
-                <br><br>
-                Nos encontramos en Jerez de los Caballeros(Badajoz), en la Calle Extremadura nº42.
-                <br><br>
-                Si quieres saber más sobre nuestros producto no dudes en explorar nuestra página web o llámanos.
-            </p>
+            <p>Esta es una panadería familiar de hace más de 50 años.</p>
+            <p>Esta panadería la llevan a cabo los 4 hermanos: Emilio, Antonio, Francisco José y Luís.</p>
+            <p>En esta panadería elaboramos todo tipo de productos de bollería, pastelería y otros tipos de productos
+                artesanales.</p>
+            <p>Nuestros productos están elaborados por productos de gran calidad.</p>
+            <p>Hacemos reparto de bollería a domicilio y también de tartas a los establecimientos donde tendrá lugar la
+                celebración.</p>
+            <p>Nos encontramos en Jerez de los Caballeros (Badajoz), en la Calle Extremadura nº42.</p>
+            <p>Si quieres saber más sobre nuestros producto no dudes en explorar nuestra página web o llamarnos.</p>
         </div>
     </div>
 </body>
+
 </html>

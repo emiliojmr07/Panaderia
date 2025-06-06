@@ -1,74 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width = device-width, initial-scale=1.0">
     <title>Panadería y Pastelería Luís Macías e Hijos</title>
     <style>
-        html, body {
+        html,
+        body {
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: Arial, sans-serif;
+            overflow: hidden;
         }
 
         .fila-superior {
             display: flex;
             height: 25%;
-        }
-
-        .logo {
-            width: 12%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-
-        .titulo {
-            width: 88%;
-            height: 100%;
-            border: none;
+            width: 100%;
         }
 
         .fila-inferior {
             display: flex;
             height: 75%;
+            width: 100%;
         }
 
-        .menu {
-            width: 12%;
+        .columna-izquierda {
+            width: 18%;
+            height: 100%;
+            border: none;
+            min-width: 140px;
+            /* Opcional: asegura buen aspecto en pantallas grandes */
+        }
+
+        .columna-derecha {
+            width: 82%;
             height: 100%;
             border: none;
         }
 
-        .principal {
-            width: 88%;
-            height: 100%;
+        iframe {
             border: none;
-        }
-
-        @media screen and (max-width: 768px) {
-            .fila-superior,
-            .fila-inferior {
-                flex-direction: column;
-                height: auto;
-            }
-
-            .logo, .titulo, .menu, .principal {
-                width: 100%;
-                height: auto;
-            }
         }
     </style>
 </head>
+
 <body>
     <div class="fila-superior">
-        <iframe src="logo.html" class="logo" name="logo" loading="lazy"></iframe>
-        <iframe src="titulo.html" class="titulo" name="titulo" loading="lazy"></iframe>
+        <iframe src="logo.html" class="columna-izquierda" name="logo"></iframe>
+        <iframe src="titulo.html" class="columna-derecha" name="titulo"></iframe>
     </div>
     <div class="fila-inferior">
-        <iframe src="menu.html" class="menu" name="menu" loading="lazy"></iframe>
-        <iframe src="Principal.html" class="principal" name="principal" loading="lazy"></iframe>
+        <iframe src="menu.html" class="columna-izquierda" name="menu"></iframe>
+        <iframe src="Principal.html" class="columna-derecha" name="principal"></iframe>
     </div>
 </body>
+
 </html>

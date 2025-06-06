@@ -1,618 +1,567 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Productos</title>
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8">
+  <title>Productos</title>
+  <style>
+    /* ---------------- Reset y cuerpo ---------------- */
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url("img/fondoproductos.jpg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      color: #5d4037;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url("img/fondoproductos.jpg");
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            color: #5d4037;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
+    /* ------------- Contenedor principal ------------- */
+    .contenido-principal {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding-top: 10px;
+      text-align: center;
+    }
+    h2 {
+      text-align: center;
+      background-color: rgba(255, 248, 225, 0.6);
+      padding: 10px 20px;
+      border-radius: 12px;
+      display: inline-block;
+      color: #5d4037;
+      font-weight: bold;
+    }
 
-        .contenido-principal {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            padding-top: 10px;
-            text-align: center;
-        }
+    /* -------------- Categorías / Productos -------------- */
+    .categorias,
+    .productos {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+    .categorias button,
+    .productos button {
+      padding: 10px 15px;
+      background-color: #ffcc80;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #5d4037;
+      transition: background-color 0.2s;
+    }
+    .categorias button:hover,
+    .productos button:hover {
+      background-color: #ffe0b2;
+    }
 
-        h2 {
-            text-align: center;
-            background-color: rgba(255, 248, 225, 0.6);
-            padding: 10px 20px;
-            border-radius: 12px;
-            display: inline-block;
-            color: #5d4037;
-            font-weight: bold;
-        }
+    /* ------------- Vista de detalle (modal) ------------- */
+    /* Overlay semi-transparente */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    /* Contenedor del cuadro modal */
+    .modal {
+      background-color: #fbe9e7;
+      border-radius: 12px;
+      max-width: 800px;
+      width: 90%;
+      margin: 0 20px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.2s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        .categorias,
-        .productos {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
+    .detalle-contenido {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .detalle-imagen img {
+      max-width: 250px;
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    .detalle-info {
+      max-width: 300px;
+      text-align: left;
+      color: #5d4037;
+    }
+    .detalle-info h3 {
+      margin-top: 0;
+      color: #5d4037;
+    }
+    .detalle-info p {
+      margin: 8px 0;
+      line-height: 1.4;
+    }
+    .detalle-info p strong {
+      color: #4e342e;
+    }
+    .volver {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 16px;
+      background-color: #d7ccc8;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #4e342e;
+      transition: background-color 0.2s;
+    }
+    .volver:hover {
+      background-color: #bcaaa4;
+    }
 
-        .categorias button,
-        .productos button {
-            padding: 10px 15px;
-            background-color: #ffcc80;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            color: #5d4037;
-            transition: background-color 0.2s;
-        }
-
-        .categorias button:hover,
-        .productos button:hover {
-            background-color: #ffe0b2;
-        }
-
-        .detalle {
-            max-width: 800px;
-            margin: auto;
-            background-color: #fbe9e7;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            display: none;
-        }
-
-        .detalle-contenido {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .detalle-imagen img {
-            max-width: 250px;
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            object-fit: cover;
-        }
-
-        .detalle-info {
-            max-width: 300px;
-            text-align: left;
-        }
-
-        .volver {
-            display: block;
-            margin: 10px auto 30px;
-            padding: 8px 16px;
-            background-color: #d7ccc8;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            color: #4e342e;
-        }
-    </style>
+    /* -------- Botón "Volver a categorías" -------- */
+    #vista-productos .volver {
+      display: block;
+      margin: 10px auto 30px;
+      padding: 8px 16px;
+      background-color: #d7ccc8;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #4e342e;
+      transition: background-color 0.2s;
+    }
+    #vista-productos .volver:hover {
+      background-color: #bcaaa4;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="contenido-principal">
-        <h2>Productos</h2>
+  <div class="contenido-principal">
+    <h2>Productos</h2>
 
-        <!-- Categorías -->
-        <div class="categorias" id="vista-categorias">
-            <button onclick="mostrarProductos('panaderia')">Panadería</button>
-            <button onclick="mostrarProductos('pasteleria')">Pastelería</button>
-            <button onclick="mostrarProductos('otros')">Otros productos</button>
-            <button onclick="mostrarProductos('EncargosEspeciales')">Encargos especiales</button>
-        </div>
-
-        <!-- Lista de los productos -->
-        <div id="vista-productos" style="display: none;">
-            <button class="volver" onclick="volverInicio()">Volver a categorías</button>
-            <div class="productos" id="lista-productos"></div>
-        </div>
-
-        <!-- Detalles de los productos -->
-        <div class="detalle" id="detalle-producto"></div>
+    <!-- ---------------- Categorías ---------------- -->
+    <div class="categorias" id="vista-categorias">
+      <button onclick="mostrarProductos('panaderia')">Panadería</button>
+      <button onclick="mostrarProductos('pasteleria')">Pastelería</button>
+      <button onclick="mostrarProductos('otros')">Otros productos</button>
+      <button onclick="mostrarProductos('EncargosEspeciales')">Encargos especiales</button>
     </div>
 
-    <script>
-        const productos = {
-            panaderia: [
-                {
-                    nombre: "Pan de telera",
-                    ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
-                    precio: "1.35€",
-                    imagen: "img/PanTelera.jpg"
-
-                },
-                {
-                    nombre: "Bagget Larga",
-                    ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
-                    precio: "0,90€",
-                    imagen: "img/BaggetLarga.jpg"
-
-                },
-                {
-                    nombre: "Barra de pan",
-                    ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
-                    precio: "0,90€",
-                    imagen: "img/Barra.jpg"
-
-                },
-                {
-                    nombre: "Bollo de pan",
-                    ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
-                    precio: "0,60€",
-                    imagen: "img/BolloPan.jpg"
-
-                },
-                {
-                    nombre: "Bolsa de bollos",
-                    ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
-                    precio: "1,40€",
-                    imagen: "img/BolsaBollos.jpg"
-
-                },
-                {
-                    nombre: "Bollo integral",
-                    ingredientes: "Harina de trigo integral 100% ecológica, sal, agua, levadura, aditivos panarios",
-                    precio: "0,60€",
-                    imagen: "img/BolloIntegral.jpg"
-
-                },
-                {
-                    nombre: "Barra integral",
-                    ingredientes: "Harina de trigo integral 100% ecológica, sal, agua, levadura, aditivos panarios",
-                    precio: "1€",
-                    imagen: "img/BarraIntegral.jpg"
-
-                },
-                {
-                    nombre: "Bollo centeno integral-trigo",
-                    ingredientes: "Harina de centeno 100% y 20% harina de trigo, sal, agua, levadura, aditivos panarios",
-                    precio: "0,60€",
-                    imagen: "img/BolloCenteno.jpg"
-
-                },
-                {
-                    nombre: "Barra centeno integral-trigo",
-                    ingredientes: "Harina de centeno 100% y 20% harina de trigo, sal, agua, levadura, aditivos panarios",
-                    precio: "1,10€",
-                    imagen: "img/BarraCeteno.jpg"
-
-                },
-                {
-                    nombre: "Medio pan de piña",
-                    ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
-                    precio: "0,90€",
-                    imagen: "img/MedioPanPiña.jpg"
-
-                },
-                {
-                    nombre: "Migas",
-                    ingredientes: "Pan común molido.",
-                    precio: "1,40€",
-                    imagen: "img/Migas.jpg"
-
-                },
-                {
-                    nombre: "Mollete",
-                    ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
-                    precio: "0,60€",
-                    imagen: "img/Mollete.jpg"
-
-                },
-                {
-                    nombre: "Torrijas",
-                    ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
-                    precio: "0,50€",
-                    imagen: "img/Torrijas.jpg"
-
-                },
-                {
-                    nombre: "Roscos",
-                    ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
-                    precio: "1,20€",
-                    imagen: "img/Roscos.jpg"
-
-                },
-                {
-                    nombre: "Viena",
-                    ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
-                    precio: "0,60€",
-                    imagen: "img/Viena.jpg"
-
-                }
-
-            ],
-            pasteleria: [
-                {
-                    nombre: "Caña de chocolate",
-                    ingredientes: "Hojaldre (Harina, agua, sal y margarina de hojaldre), azúcar y chocolate.",
-                    precio: "1,30€ la unidad.",
-                    imagen: "img/CañaChocolate.jpg"
-
-                },
-                {
-                    nombre: "Barquitos",
-                    ingredientes: "Hojaldre (Harina, agua, sal y margarina de hojaldre), aceite de semilla, huevo, azúcar, cabello de ángel y almendras.",
-                    precio: "11€ KILO.",
-                    imagen: "img/Barquitos.jpg"
-
-                },
-
-                {
-                    nombre: "Bollo turco",
-                    ingredientes: "Almendra, huevo, azúcar y ralladura de limón.",
-                    precio: "Pequeño: 28€ unidad, Mediano: 36€ unidad, Grande: 43€ unidad.",
-                    imagen: "img/BolloTurco.jpg"
-
-                },
-
-                {
-                    nombre: "Bolluelas",
-                    ingredientes: "Huevo, harina, azúcar y ralladura de limón.",
-                    precio: "3€ Bolsa.",
-                    imagen: "img/Bolluelas.jpg"
-
-                },
-
-                {
-                    nombre: "Cortadillo",
-                    ingredientes: "Aceite de semillas, harina, huevo, azúcar y ralladura de limón.",
-                    precio: "8,75€ Kilo.",
-                    imagen: "img/Cortadillos.jpg"
-
-                },
-
-                {
-                    nombre: "Galletas de Vainilla",
-                    ingredientes: "Harina, azúcar, huevo, vainilla, bicarbonato amónico.",
-                    precio: "2,95€ Docena",
-                    imagen: "img/GalletasVainillas.jpg"
-
-                },
-
-                {
-                    nombre: "Polvorones",
-                    ingredientes: "Harina de trigo, manteca de cerdo, huevo, clavo y canela.",
-                    precio: "3,70€ Docena",
-                    imagen: "img/Polvorones.jpg"
-
-                },
-
-
-                {
-                    nombre: "Magdalenas",
-                    ingredientes: "Aceite de oliva, huevo, harina, azúcar y ralladura de limón.",
-                    precio: "2,90€ Bolsa",
-                    imagen: "img/Magdalenas.jpg"
-
-                },
-
-                {
-                    nombre: "Palmeras de yema",
-                    ingredientes: "Hojaldre (Harina, agua, sal y margarina de hojaldre), azúcar y yema.",
-                    precio: "1,30€ Unidad",
-                    imagen: "img/PalmeraYema.jpg"
-
-                },
-
-
-                {
-                    nombre: "Palmeras de chocolate",
-                    ingredientes: "Hojaldre (Harina, agua, sal y margarina de hojaldre), azúcar y chocolate.",
-                    precio: "1,30€ Unidad",
-                    imagen: "img/PalmeraChocolate.jpg"
-
-                },
-
-                {
-                    nombre: "Pastas de bollo turco",
-                    ingredientes: "Almendra, huevo, azúcar y ralladura de limón",
-                    precio: "12€ Docena",
-                    imagen: "img/Pastas.jpg"
-
-                },
-
-                {
-                    nombre: "Perrunillas",
-                    ingredientes: "Harina de trigo, manteca de cerdo, azúcar, huevo y ralladura de limón",
-                    precio: "3,75€ Docena",
-                    imagen: "img/Perrunillas.jpg"
-
-                },
-
-                {
-                    nombre: "Pestiños",
-                    ingredientes: "Aceite de oliva, harina, canela, clavo aguardiente, anís en grano y miel",
-                    precio: "7,50€ Docena",
-                    imagen: "img/Pestiños.jpg"
-
-                },
-
-                {
-                    nombre: "Roscas de vino",
-                    ingredientes: "Harina de trigo, manteca de cerdo, azúcar, huevo, canela, vino blanco",
-                    precio: "3,70€ Docena",
-                    imagen: "img/RoscasDeVino.jpg"
-
-                },
-
-                {
-                    nombre: "Tarta Chica",
-                    ingredientes: "Puede ser de galletas o de bizcocho.",
-                    precio: "El precio aparece en la imagen con sus respectivos sabores.",
-                    imagen: "img/TartaChica.jpg"
-
-                },
-
-                {
-                    nombre: "Tarta Nº12",
-                    ingredientes: "Puede ser de galletas o de bizcocho.",
-                    precio: "El precio aparece en la imagen con sus respectivos sabores.",
-                    imagen: "img/TartaN12.jpg"
-
-                },
-
-                {
-                    nombre: "Tarta Mediana",
-                    ingredientes: "Puede ser de galletas o de bizcocho.",
-                    precio: "El precio aparece en la imagen con sus respectivos sabores",
-                    imagen: "img/TartaMediana.jpg"
-
-                },
-
-                {
-                    nombre: "Tarta Grande",
-                    ingredientes: "Puede ser de galletas o de bizcocho.",
-                    precio: "El precio aparece en la imagen con sus respectivos sabores.",
-                    imagen: "img/TartaGrande.jpg"
-
-                },
-
-                {
-                    nombre: "Tarta Extra-Grande",
-                    ingredientes: "Puede ser de galletas o de bizcocho.",
-                    precio: "El precio aparece en la imagen con sus respectivos sabores.",
-                    imagen: "img/TartaExtraGrande.jpg"
-
-                }
-            ],
-
-            otros: [
-                {
-                    nombre: "Empanada de pisto",
-                    ingredientes: "Hojaldre (Harina, agua, sal y margarina de hojaldre), pimientos, cebolla, tomate, atún y orégano",
-                    precio: "13€ Kilo",
-                    imagen: "img/EmpanadaPisto.jpg"
-
-                },
-
-                {
-                    nombre: "Empanada de bacon",
-                    ingredientes: "Hojaldre (Harina, agua, sal y margarina de hojaldre), bacon y queso.",
-                    precio: "13€ Kilo",
-                    imagen: "img/EmpanadaPisto.jpg"
-
-                },
-                {
-                    nombre: "Tronco",
-                    ingredientes: "Harina de trigo, azúcar, huevo, leche , nata y chocolate.",
-                    precio: "23€",
-                    imagen: "img/Tronco.jpg"
-
-                },
-                {
-                    nombre: "Bandeja de pastelinos chicos",
-                    ingredientes: "harina, azúcar, huevo, chocolate, nata y yema.",
-                    precio: "0,65€ cada unidad.",
-                    imagen: "img/PastelinosChicos.jpg"
-
-                },
-                {
-                    nombre: "Cupcake de chocolate",
-                    ingredientes: "Azúcar, harina, huevos, aceite, chocolate y la cobertura es de chocolate blanco con colorantes alimentarios autorizados, gominolas y lacasitos.",
-                    precio: "0,75€ cada unidad.",
-                    imagen: "img/Capcuke.jpg"
-
-                }
-            ],
-
-            EncargosEspeciales: [
-                {
-                    nombre: "Pan Largo",
-                    imagen: "img/PanLargo.jpg"
-
-                },
-                {
-                    nombre: "Tarta de corazón",
-                    imagen: "img/TartaCorazon.jpg"
-
-                },
-                {
-                    nombre: "Tarta de cumpleaños especial",
-                    imagen: "img/TartaCumpleEspecial.jpg"
-
-                },
-                {
-                    nombre: "Tarta Enlace",
-                    imagen: "img/TartaEnlace1.jpg"
-
-                },
-                {
-                    nombre: "Tarta de comunión",
-                    imagen: "img/TartaComunión.jpg"
-
-                },
-                {
-                    nombre: "Tarta en forma de número",
-                    imagen: "img/TartaNumero.jpg"
-
-                },
-                {
-                    nombre: "Tarta Enlace 2",
-                    imagen: "img/TartaEnlace2.jpg"
-
-                },
-                {
-                    nombre: "Tarta de Harry Potter",
-                    imagen: "img/TartaHarryPotter.jpg"
-
-                },
-                {
-                    nombre: "Tarta Cumpleaños",
-                    imagen: "img/TartaCumple.jpg"
-
-                },
-                {
-                    nombre: "Tarta con Cupcake",
-                    imagen: "img/TartaCupcake.jpg"
-
-                },
-                {
-                    nombre: "Tarta Happy Birthday",
-                    imagen: "img/TartaCumple2.jpg"
-
-                },
-                {
-                    nombre: "Tarta de Navidad",
-                    imagen: "img/TartaNavidad.jpg"
-
-                },
-                {
-                    nombre: "Tarta de Boda",
-                    imagen: "img/TartaBoda.jpg"
-
-                },
-                {
-                    nombre: "Tarta de Comunión",
-                    imagen: "img/TartaComunion2.jpg"
-
-                }
-            ],
+    <!-- ------------ Vista de lista de productos ------------ -->
+    <div id="vista-productos" style="display: none;">
+      <button class="volver" onclick="volverInicio()">Volver a categorías</button>
+      <div class="productos" id="lista-productos"></div>
+    </div>
+  </div>
+
+  <!-- ---------------- Detalle / Modal ---------------- -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="detalle-producto"></div>
+  </div>
+
+  <script>
+    /* -------- Datos de productos -------- */
+    const productos = {
+      panaderia: [
+        {
+          nombre: "Pan de telera",
+          ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
+          precio: "1.35€",
+          imagen: "img/PanTelera.jpg"
+        },
+        {
+          nombre: "Bagget Larga",
+          ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
+          precio: "0,90€",
+          imagen: "img/BaggetLarga.jpg"
+        },
+        {
+          nombre: "Barra de pan",
+          ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
+          precio: "0,90€",
+          imagen: "img/Barra.jpg"
+        },
+        {
+          nombre: "Bollo de pan",
+          ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
+          precio: "0,60€",
+          imagen: "img/BolloPan.jpg"
+        },
+        {
+          nombre: "Bolsa de bollos",
+          ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
+          precio: "1,40€",
+          imagen: "img/BolsaBollos.jpg"
+        },
+        {
+          nombre: "Bollo integral",
+          ingredientes: "Harina de trigo integral 100% ecológica, sal, agua, levadura, aditivos panarios",
+          precio: "0,60€",
+          imagen: "img/BolloIntegral.jpg"
+        },
+        {
+          nombre: "Barra integral",
+          ingredientes: "Harina de trigo integral 100% ecológica, sal, agua, levadura, aditivos panarios",
+          precio: "1€",
+          imagen: "img/BarraIntegral.jpg"
+        },
+        {
+          nombre: "Bollo centeno integral-trigo",
+          ingredientes: "Harina de centeno 100% y 20% harina de trigo, sal, agua, levadura, aditivos panarios",
+          precio: "0,60€",
+          imagen: "img/BolloCenteno.jpg"
+        },
+        {
+          nombre: "Barra centeno integral-trigo",
+          ingredientes: "Harina de centeno 100% y 20% harina de trigo, sal, agua, levadura, aditivos panarios",
+          precio: "1,10€",
+          imagen: "img/BarraCeteno.jpg"
+        },
+        {
+          nombre: "Medio pan de piña",
+          ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
+          precio: "0,90€",
+          imagen: "img/MedioPanPiña.jpg"
+        },
+        {
+          nombre: "Migas",
+          ingredientes: "Pan común molido.",
+          precio: "1,40€",
+          imagen: "img/Migas.jpg"
+        },
+        {
+          nombre: "Mollete",
+          ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
+          precio: "0,60€",
+          imagen: "img/Mollete.jpg"
+        },
+        {
+          nombre: "Torrijas",
+          ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
+          precio: "0,50€",
+          imagen: "img/Torrijas.jpg"
+        },
+        {
+          nombre: "Roscos",
+          ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
+          precio: "1,20€",
+          imagen: "img/Roscos.jpg"
+        },
+        {
+          nombre: "Viena",
+          ingredientes: "Harina de trigo, sal, agua, levadura, aditivos panarios",
+          precio: "0,60€",
+          imagen: "img/Viena.jpg"
+        }
+      ],
+      pasteleria: [
+        {
+          nombre: "Caña de chocolate",
+          ingredientes: "Hojaldre (Harina, agua, sal y margarina de hojaldre), azúcar y chocolate.",
+          precio: "1,30€ la unidad.",
+          imagen: "img/CañaChocolate.jpg"
+        },
+        {
+          nombre: "Barquitos",
+          ingredientes: "Hojaldre (Harina, agua, sal y margarina de hojaldre), aceite de semilla, huevo, azúcar, cabello de ángel y almendras.",
+          precio: "11€ KILO.",
+          imagen: "img/Barquitos.jpg"
+        },
+        {
+          nombre: "Bollo turco",
+          ingredientes: "Almendra, huevo, azúcar y ralladura de limón.",
+          precio: "Pequeño: 28€ unidad, Mediano: 36€ unidad, Grande: 43€ unidad.",
+          imagen: "img/BolloTurco.jpg"
+        },
+        {
+          nombre: "Bolluelas",
+          ingredientes: "Huevo, harina, azúcar y ralladura de limón.",
+          precio: "3€ Bolsa.",
+          imagen: "img/Bolluelas.jpg"
+        },
+        {
+          nombre: "Cortadillo",
+          ingredientes: "Aceite de semillas, harina, huevo, azúcar y ralladura de limón.",
+          precio: "8,75€ Kilo.",
+          imagen: "img/Cortadillos.jpg"
+        },
+        {
+          nombre: "Galletas de Vainilla",
+          ingredientes: "Harina, azúcar, huevo, vainilla, bicarbonato amónico.",
+          precio: "2,95€ Docena",
+          imagen: "img/GalletasVainillas.jpg"
+        },
+        {
+          nombre: "Polvorones",
+          ingredientes: "Harina de trigo, manteca de cerdo, huevo, clavo y canela.",
+          precio: "3,70€ Docena",
+          imagen: "img/Polvorones.jpg"
+        },
+        {
+          nombre: "Magdalenas",
+          ingredientes: "Aceite de oliva, huevo, harina, azúcar y ralladura de limón.",
+          precio: "2,90€ Bolsa",
+          imagen: "img/Magdalenas.jpg"
+        },
+        {
+          nombre: "Palmeras de yema",
+          ingredientes: "Hojaldre (Harina, agua, sal y margarina de hojaldre), azúcar y yema.",
+          precio: "1,30€ Unidad",
+          imagen: "img/PalmeraYema.jpg"
+        },
+        {
+          nombre: "Palmeras de chocolate",
+          ingredientes: "Hojaldre (Harina, agua, sal y margarina de hojaldre), azúcar y chocolate.",
+          precio: "1,30€ Unidad",
+          imagen: "img/PalmeraChocolate.jpg"
+        },
+        {
+          nombre: "Pastas de bollo turco",
+          ingredientes: "Almendra, huevo, azúcar y ralladura de limón",
+          precio: "12€ Docena",
+          imagen: "img/Pastas.jpg"
+        },
+        {
+          nombre: "Perrunillas",
+          ingredientes: "Harina de trigo, manteca de cerdo, azúcar, huevo y ralladura de limón",
+          precio: "3,75€ Docena",
+          imagen: "img/Perrunillas.jpg"
+        },
+        {
+          nombre: "Pestiños",
+          ingredientes: "Aceite de oliva, harina, canela, clavo aguardiente, anís en grano y miel",
+          precio: "7,50€ Docena",
+          imagen: "img/Pestiños.jpg"
+        },
+        {
+          nombre: "Roscas de vino",
+          ingredientes: "Harina de trigo, manteca de cerdo, azúcar, huevo, canela, vino blanco",
+          precio: "3,70€ Docena",
+          imagen: "img/RoscasDeVino.jpg"
+        },
+        {
+          nombre: "Tarta Chica",
+          ingredientes: "Puede ser de galletas o de bizcocho.",
+          precio: "El precio aparece en la imagen con sus respectivos sabores.",
+          imagen: "img/TartaChica.jpg"
+        },
+        {
+          nombre: "Tarta Nº12",
+          ingredientes: "Puede ser de galletas o de bizcocho.",
+          precio: "El precio aparece en la imagen con sus respectivos sabores.",
+          imagen: "img/TartaN12.jpg"
+        },
+        {
+          nombre: "Tarta Mediana",
+          ingredientes: "Puede ser de galletas o de bizcocho.",
+          precio: "El precio aparece en la imagen con sus respectivos sabores",
+          imagen: "img/TartaMediana.jpg"
+        },
+        {
+          nombre: "Tarta Grande",
+          ingredientes: "Puede ser de galletas o de bizcocho.",
+          precio: "El precio aparece en la imagen con sus respectivos sabores.",
+          imagen: "img/TartaGrande.jpg"
+        },
+        {
+          nombre: "Tarta Extra-Grande",
+          ingredientes: "Puede ser de galletas o de bizcocho.",
+          precio: "El precio aparece en la imagen con sus respectivos sabores.",
+          imagen: "img/TartaExtraGrande.jpg"
+        }
+      ],
+      otros: [
+        {
+          nombre: "Empanada de pisto",
+          ingredientes: "Hojaldre (Harina, agua, sal y margarina de hojaldre), pimientos, cebolla, tomate, atún y orégano",
+          precio: "13€ Kilo",
+          imagen: "img/EmpanadaPisto.jpg"
+        },
+        {
+          nombre: "Empanada de bacon",
+          ingredientes: "Hojaldre (Harina, agua, sal y margarina de hojaldre), bacon y queso.",
+          precio: "13€ Kilo",
+          imagen: "img/EmpanadaPisto.jpg"
+        },
+        {
+          nombre: "Tronco",
+          ingredientes: "Harina de trigo, azúcar, huevo, leche, nata y chocolate.",
+          precio: "23€",
+          imagen: "img/Tronco.jpg"
+        },
+        {
+          nombre: "Bandeja de pastelinos chicos",
+          ingredientes: "Harina, azúcar, huevo, chocolate, nata y yema.",
+          precio: "0,65€ cada unidad.",
+          imagen: "img/PastelinosChicos.jpg"
+        },
+        {
+          nombre: "Cupcake de chocolate",
+          ingredientes: "Azúcar, harina, huevos, aceite, chocolate y la cobertura es de chocolate blanco con colorantes alimentarios autorizados, gominolas y lacasitos.",
+          precio: "0,75€ cada unidad.",
+          imagen: "img/Capcuke.jpg"
+        }
+      ],
+      EncargosEspeciales: [
+        { nombre: "Pan Largo", imagen: "img/PanLargo.jpg" },
+        { nombre: "Tarta de corazón", imagen: "img/TartaCorazon.jpg" },
+        { nombre: "Tarta de cumpleaños especial", imagen: "img/TartaCumpleEspecial.jpg" },
+        { nombre: "Tarta Enlace", imagen: "img/TartaEnlace1.jpg" },
+        { nombre: "Tarta de comunión", imagen: "img/TartaComunión.jpg" },
+        { nombre: "Tarta en forma de número", imagen: "img/TartaNumero.jpg" },
+        { nombre: "Tarta Enlace 2", imagen: "img/TartaEnlace2.jpg" },
+        { nombre: "Tarta de Harry Potter", imagen: "img/TartaHarryPotter.jpg" },
+        { nombre: "Tarta Cumpleaños", imagen: "img/TartaCumple.jpg" },
+        { nombre: "Tarta con Cupcake", imagen: "img/TartaCupcake.jpg" },
+        { nombre: "Tarta Happy Birthday", imagen: "img/TartaCumple2.jpg" },
+        { nombre: "Tarta de Navidad", imagen: "img/TartaNavidad.jpg" },
+        { nombre: "Tarta de Boda", imagen: "img/TartaBoda.jpg" },
+        { nombre: "Tarta de Comunión", imagen: "img/TartaComunion2.jpg" }
+      ]
+    };
+
+    
+    function mostrarProductos(categoria) {
+      document.getElementById("vista-categorias").style.display = "none";
+      document.getElementById("vista-productos").style.display = "block";
+      cerrarModal(); // por si el modal estaba abierto
+
+      const contenedor = document.getElementById("lista-productos");
+      contenedor.innerHTML = "";
+
+      productos[categoria].forEach((producto) => {
+        
+        const tarjeta = document.createElement("div");
+        tarjeta.style.display = "flex";
+        tarjeta.style.flexDirection = "column";
+        tarjeta.style.alignItems = "center";
+        tarjeta.style.cursor = "pointer";
+        tarjeta.style.backgroundColor = "#ffcc80";
+        tarjeta.style.borderRadius = "8px";
+        tarjeta.style.padding = "10px";
+        tarjeta.style.transition = "background-color 0.2s";
+        tarjeta.style.width = "160px";
+        tarjeta.style.boxSizing = "border-box";
+        tarjeta.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.1)";
+        tarjeta.style.border = "1px solid #e0e0e0";
+
+        tarjeta.onmouseenter = () => {
+          tarjeta.style.backgroundColor = "#ffe0b2";
+        };
+        tarjeta.onmouseleave = () => {
+          tarjeta.style.backgroundColor = "#ffcc80";
         };
 
-        function mostrarProductos(categoria) {
-            document.getElementById("vista-categorias").style.display = "none";
-            document.getElementById("vista-productos").style.display = "block";
-            document.getElementById("detalle-producto").style.display = "none";
+        tarjeta.onclick = () => mostrarDetalle(producto, categoria);
 
-            const contenedor = document.getElementById("lista-productos");
-            contenedor.innerHTML = "";
+        const img = document.createElement("img");
+        img.src = producto.imagen;
+        img.alt = producto.nombre;
+        img.style.width = "140px";
+        img.style.height = "140px";
+        img.style.objectFit = "cover";
+        img.style.borderRadius = "6px";
+        img.style.marginBottom = "8px";
 
-            productos[categoria].forEach((producto) => {
-                const tarjeta = document.createElement("div");
-                tarjeta.style.display = "flex";
-                tarjeta.style.flexDirection = "column";
-                tarjeta.style.alignItems = "center";
-                tarjeta.style.cursor = "pointer";
-                tarjeta.style.backgroundColor = "#ffcc80";
-                tarjeta.style.borderRadius = "8px";
-                tarjeta.style.padding = "10px";
-                tarjeta.style.transition = "background-color 0.2s";
-                tarjeta.style.width = "160px";
-                tarjeta.style.boxSizing = "border-box";
+        const nombre = document.createElement("span");
+        nombre.textContent = producto.nombre;
+        nombre.style.fontWeight = "bold";
+        nombre.style.color = "#5d4037";
+        nombre.style.fontSize = "14px";
+        nombre.style.textAlign = "center";
 
-                tarjeta.style.boxShadow = "0 4px 8px rgba(0, 0, 0,, 0.1)";
-                tarjeta.style.border = "1px solid #e0e0e0";
+        tarjeta.appendChild(img);
+        tarjeta.appendChild(nombre);
+        contenedor.appendChild(tarjeta);
+      });
+    }
 
-                tarjeta.onmouseenter = () => {
-                    tarjeta.style.backgroundColor = "#ffe0b2";
-                };
-                tarjeta.onmouseleave = () => {
-                    tarjeta.style.backgroundColor = "#ffcc80";
-                };
+    
+    function mostrarDetalle(producto, categoria) {
+      const detalleDiv = document.getElementById("detalle-producto");
+      let contenidoHTML = "";
 
-                tarjeta.onclick = () => mostrarDetalle(producto, categoria);
+      if (categoria === "EncargosEspeciales") {
+        
+        contenidoHTML = `
+          <div class="detalle-contenido">
+            <div class="detalle-imagen">
+              <img src="${producto.imagen}" alt="${producto.nombre}">
+            </div>
+            <div class="detalle-info">
+              <h3>${producto.nombre}</h3>
+              <button class="volver" onclick="cerrarModal()">Cerrar</button>
+            </div>
+          </div>
+        `;
+      } else {
+        
+        contenidoHTML = `
+          <div class="detalle-contenido">
+            <div class="detalle-imagen">
+              <img src="${producto.imagen}" alt="${producto.nombre}">
+            </div>
+            <div class="detalle-info">
+              <h3>${producto.nombre}</h3>
+              <p><strong>Ingredientes:</strong> ${producto.ingredientes}</p>
+              <p><strong>Precio:</strong> ${producto.precio}</p>
+              <button class="volver" onclick="cerrarModal()">Cerrar</button>
+            </div>
+          </div>
+        `;
+      }
 
-                const img = document.createElement("img");
-                img.src = producto.imagen;
-                img.alt = producto.nombre;
-                img.style.width = "140px";
-                img.style.height = "140px";
-                img.style.objectFit = "cover";
-                img.style.borderRadius = "6px";
-                img.style.marginBottom = "8px";
+      detalleDiv.innerHTML = contenidoHTML;
+      abrirModal();
+    }
 
-                const nombre = document.createElement("span");
-                nombre.textContent = producto.nombre;
-                nombre.style.fontWeight = "bold";
-                nombre.style.color = "#5d4037";
-                nombre.style.fontSize = "14px";
-                nombre.style.textAlign = "center";
+    
+    function abrirModal() {
+      document.getElementById("modal-overlay").style.display = "flex";
+    }
+    function cerrarModal() {
+      document.getElementById("modal-overlay").style.display = "none";
+    }
 
-                tarjeta.appendChild(img);
-                tarjeta.appendChild(nombre);
-                contenedor.appendChild(tarjeta);
-            });
-        }
+    
+    function volverInicio() {
+      document.getElementById("vista-categorias").style.display = "flex";
+      document.getElementById("vista-productos").style.display = "none";
+      cerrarModal();
+    }
 
-
-        function mostrarDetalle(producto, categoria) {
-            const detalle = document.getElementById("detalle-producto");
-
-            if (categoria === "EncargosEspeciales") {
-                detalle.innerHTML = `
-                <div class="detalle-contenido">
-                    <div class="detalle-imagen">
-                        <img src="${producto.imagen}" alt="${producto.nombre}">
-                    </div>
-                    <div class="detalle-info">
-                        <h3>${producto.nombre}</h3>
-                        <button class="volver" onclick="ocultarDetalle()">Volver a productos</button>
-                    </div>
-                </div>
-            `;
-            } else {
-                detalle.innerHTML = `
-                <div class="detalle-contenido">
-                    <div class="detalle-imagen">
-                        <img src="${producto.imagen}" alt="${producto.nombre}">
-                    </div>
-                    <div class="detalle-info">
-                        <h3>${producto.nombre}</h3>
-                        <p><strong>Ingredientes:</strong> ${producto.ingredientes}</p>
-                        <p><strong>Precio:</strong> ${producto.precio}</p>
-                        <button class="volver" onclick="ocultarDetalle()">Volver a productos</button>
-                    </div>
-                </div>
-            `;
-            }
-
-            detalle.style.display = "block";
-        }
-
-        function ocultarDetalle() {
-            document.getElementById("detalle-producto").style.display = "none";
-        }
-
-        function volverInicio() {
-            document.getElementById("vista-categorias").style.display = "flex";
-            document.getElementById("vista-productos").style.display = "none";
-            document.getElementById("detalle-producto").style.display = "none";
-        }
-
-    </script>
+    
+    document.getElementById("modal-overlay").addEventListener("click", function(e) {
+      // Si el clic es directamente sobre el overlay (no el cuadro modal), cierra
+      if (e.target.id === "modal-overlay") {
+        cerrarModal();
+      }
+    });
+  </script>
 </body>
-
 </html>
